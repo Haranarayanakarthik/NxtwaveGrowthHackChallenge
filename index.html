@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NxtWave — AI Workshop Growth Engine</title>
+  <meta name="description" content="Minimal growth engine and referral loop for acquiring 500 engineering students.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="logo">N</div>
+      <div>
+        <h1>NxtWave <span>Growth Lab</span></h1>
+        <p class="tagline">Campaign Target: 500 Students · ₹2,000 Budget</p>
+      </div>
+    </div>
+    <div class="nav-stats">
+      <span class="live-pill"><span class="dot"></span> Live Cohort</span>
+      <span class="counter-badge" id="navCounter">0 / 500 Registered</span>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero & Registration Grid -->
+    <section class="grid-2col">
+      
+      <!-- Left: Workshop Value Proposition -->
+      <article class="card hero-card">
+        <span class="eyebrow">Free 60-Minute Workshop</span>
+        <h2 class="hero-title">Build Your First <span class="gradient">AI Project</span></h2>
+        <p class="hero-desc">
+          Designed for final-year engineering students. Skip textbook theory and build a live, resume-ready Generative AI app in 60 minutes.
+        </p>
+
+        <ul class="features-list">
+          <li>
+            <span class="feat-icon">⚡</span>
+            <div>
+              <strong>Hands-on AI Web App</strong>
+              <small>Build and test an AI project using modern APIs.</small>
+            </div>
+          </li>
+          <li>
+            <span class="feat-icon">🎯</span>
+            <div>
+              <strong>Interview-Ready Showcase</strong>
+              <small>Get a verified NxtWave credential & GitHub repo template.</small>
+            </div>
+          </li>
+          <li>
+            <span class="feat-icon">🚀</span>
+            <div>
+              <strong>100% Free Access</strong>
+              <small>Live mentor guidance for 500 selected students.</small>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <!-- Right: Student Registration & Viral Referral Loop -->
+      <article class="card form-card">
+        <div class="card-header">
+          <h3>Reserve Your Spot</h3>
+          <p>Get instant access and your unique referral link.</p>
+        </div>
+
+        <form id="regForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required placeholder="e.g. Rahul Sharma" autocomplete="name">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">College Email</label>
+              <input type="email" id="email" required placeholder="rahul@college.edu" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="college">College / Branch</label>
+              <input type="text" id="college" required placeholder="e.g. JNTU CSE">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="source">Acquisition Channel</label>
+              <select id="source">
+                <option value="College Club">College Tech Club / Ambassador</option>
+                <option value="WhatsApp Group">WhatsApp Student Group</option>
+                <option value="Peer Referral">Peer Referral</option>
+                <option value="Instagram / LinkedIn">Instagram / LinkedIn (₹2k Budget)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ref">Referral Code (Optional)</label>
+              <input type="text" id="ref" placeholder="e.g. AI-PRIYA-9A">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btnSubmit">Register Free Spot →</button>
+        </form>
+
+        <!-- Viral Referral Success Box (Revealed on Submit) -->
+        <div id="referralBox" class="referral-box" style="display: none;">
+          <div class="referral-badge">🎉 Registration Confirmed!</div>
+          <p class="referral-intro">Share your code with 3 batchmates to unlock the AI Interview Prep Toolkit:</p>
+          <div class="code-display">
+            <span class="code-label">YOUR REFERRAL CODE:</span>
+            <code id="userCode">AI-XXXX-00</code>
+          </div>
+          <button type="button" class="btn btn-whatsapp" id="btnWhatsApp">
+            Share on WhatsApp 📲
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- Growth Dashboard & 500 Strategy Analytics -->
+    <section class="card cockpit-card">
+      <div class="cockpit-header">
+        <div>
+          <h3>500-Acquisition Funnel Cockpit</h3>
+          <p>Real-time campaign telemetry & channel performance tracking.</p>
+        </div>
+        <div class="cockpit-actions">
+          <button type="button" class="btn btn-ghost" id="btnSimulate">+ Add 5 Sample Registrations</button>
+          <button type="button" class="btn btn-ghost danger" id="btnReset">Reset Data</button>
+        </div>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <small>Current Registrations</small>
+          <strong id="metricTotal">0</strong>
+        </div>
+        <div class="metric-item">
+          <small>Target Goal</small>
+          <strong>500</strong>
+        </div>
+        <div class="metric-item">
+          <small>Goal Progress</small>
+          <strong id="metricPct">0%</strong>
+        </div>
+        <div class="metric-item">
+          <small>Experiment Budget</small>
+          <strong>₹2,000</strong>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+
+      <!-- Channel Breakdown Cards -->
+      <div class="channel-grid">
+        <div class="channel-card">
+          <div class="channel-title"><span>🏛️</span> College Ambassadors</div>
+          <p>Direct outreach in 20 target engineering colleges.</p>
+          <div class="channel-stat"><span id="chanClub">0</span> / 220 Target</div>
+        </div>
+        <div class="channel-card">
+          <div class="channel-title"><span>💬</span> WhatsApp Communities</div>
+          <p>Batchmate groups & department broadcast channels.</p>
+          <div class="channel-stat"><span id="chanWa">0</span> / 150 Target</div>
+        </div>
+        <div class="channel-card">
+          <div class="channel-title"><span>🔁</span> Viral Peer Referrals</div>
+          <p>K-factor loop: registered students invite 2+ classmates.</p>
+          <div class="channel-stat"><span id="chanRef">0</span> / 80 Target</div>
+        </div>
+        <div class="channel-card">
+          <div class="channel-title"><span>📱</span> Targeted Social Ads</div>
+          <p>₹2,000 micro-targeted ad campaign for final years.</p>
+          <div class="channel-stat"><span id="chanSocial">0</span> / 50 Target</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>NxtWave Growth Intern Challenge · Clean Architecture Prototype · Built with HTML, CSS, & Vanilla JS</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
